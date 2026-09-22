@@ -1,0 +1,100 @@
+"use client";
+
+import { motion } from "framer-motion";
+
+import { galleryItems } from "@/data/gallery";
+import { oswald } from "@/lib/fonts";
+import { useLanguage } from "@/components/providers/language-provider";
+
+import { GalleryItem } from "./gallery-item";
+
+export function GallerySection() {
+  const { dictionary: t } = useLanguage();
+  
+  return (
+    <section
+      id="gallery"
+      className="relative overflow-hidden bg-black py-24 sm:py-28 lg:py-36"
+    >
+      <div className="pointer-events-none absolute left-[-200px] top-[20%] h-[500px] w-[500px] rounded-full bg-[rgba(214,161,58,0.04)] blur-[150px]" />
+
+      <div className="mx-auto w-full max-w-[1440px] px-6 md:px-10 lg:px-16">
+        <div className="grid gap-10 border-b border-white/10 pb-12 lg:grid-cols-[1fr_0.65fr] lg:items-end lg:pb-16">
+          <motion.div
+            initial={{
+              opacity: 0,
+              y: 30,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.3,
+            }}
+            transition={{
+              duration: 0.6,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            <div className="mb-7 flex items-center gap-4">
+              <span className="text-[10px] font-bold tracking-[0.28em] text-[var(--color-gold)]">
+                {t.gallery.sectionNumber}
+              </span>
+
+              <span className="h-px w-9 bg-[var(--color-gold)]" />
+
+              <span className="text-[11px] font-semibold uppercase tracking-[0.28em] text-white/45">
+                {t.gallery.eyebrow}
+              </span>
+            </div>
+
+            <h2
+              className={`${oswald.className} flex flex-col text-[clamp(3.4rem,7vw,7.2rem)] font-bold uppercase leading-[0.86] tracking-[-0.045em] text-white`}
+            >
+              <span>{t.gallery.titleLineOne}</span>
+
+              <span className="text-[var(--color-gold)]">
+                {t.gallery.titleLineTwo}
+              </span>
+            </h2>
+          </motion.div>
+
+          <motion.p
+            className="max-w-xl text-base leading-8 text-white/45 lg:ml-auto"
+            initial={{
+              opacity: 0,
+              y: 20,
+            }}
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.3,
+            }}
+            transition={{
+              duration: 0.6,
+              delay: 0.1,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            {t.gallery.description}
+          </motion.p>
+        </div>
+
+        <div className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-12 md:auto-rows-[180px] lg:mt-14 lg:auto-rows-[210px]">
+          {galleryItems.map((item, index) => (
+            <GalleryItem
+              key={item.id}
+              item={item}
+              index={index}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
